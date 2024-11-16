@@ -6,6 +6,10 @@ date: today
 
 ### HTML scraping
 
+Yes
+
+There is a positive overall effect on including the header content. It leds to faster convergence, lower loss, and higher accuracy overall.
+
 Does including header content improve predictions? Answer the question and provide quantitative evidence supporting your answer.
 
 ### Bigrams
