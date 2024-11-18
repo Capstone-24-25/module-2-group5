@@ -6,9 +6,15 @@ date: today
 
 ### HTML scraping
 
-Yes
+![Only including Paragraph Content](images/Rplot.png){fig-align="center" width="346"}
 
-There is a positive overall effect on including the header content. It leds to faster convergence, lower loss, and higher accuracy overall.
+![Both Paragraph Content and Header Information](images/Rplot01after.png){fig-align="center" width="352"}
+
+There is a positive overall effect on including the header content.
+
+The binary accuracy increased from 0.93 to 0.95, indicating a small improvement in model performance on the training data. validation binary accuracy didn't really change much, stay around 0.8. The loss overall decreased throughout the five epoch, at the end, it decrease from 0.33 to 0.26, indicating better model fitting. Val_loss also increased from 0.87 to 1.06
+
+There is a positive overall effect on including the header content. It leds to faster convergence, lower loss, and higher accuracy .
 
 Does including header content improve predictions? Answer the question and provide quantitative evidence supporting your answer.
 
