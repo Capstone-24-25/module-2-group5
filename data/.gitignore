@@ -1,3 +1,5 @@
 claims_clean.csv
 claims_raw.csv
 claims_test.csv
+X_features_unigrams.csv
+X_features_bigrams.csv
