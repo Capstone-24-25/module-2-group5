@@ -56,9 +56,9 @@ summary(model)
 history <- model %>% fit(
   x = train_padded,
   y = train_labels,
-  validation_split = 0.2,
+  validation_split = 0.2,   
   epochs = 5,
-  batch_size = 32,
+  batch_size = 32,      
   verbose = 1
 )
 
