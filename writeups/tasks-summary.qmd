@@ -6,7 +6,7 @@ date: today
 
 ### HTML scraping
 
-Including header content in the model resulted in a small improvement in performance, primarily on the training data. The binary accuracy increased from 0.92 to 0.95, indicating a small improvement in the model's ability to classify the training data correctly, demonstrating better model fitting. The loss decreased throughout the five epochs, ending at 0.27 compared to 0.31, further indicating improved model fitting. On the other hand, the changes were less pronounced in the validation set. The validation binary accuracy increased slightly but stayed around 0.8, suggesting no significant improvement in the model's generalization to unseen data. However, the validation loss decreased slightly from 0.83 to 0.79, indicating a minor improvement in performance on the validation set. Overall, including header content seems to enhance the model’s performance on the training data, but its impact on predictive accuracy for unseen data is minimal.
+This is the change in performance using the given NLP FNN model, with connected layer with 25 neurons (units). Including header content in the model resulted in a small improvement in performance, primarily on the training data. The binary accuracy increased from 0.92 to 0.95, indicating a small improvement in the model's ability to classify the training data correctly, demonstrating better model fitting. The loss decreased throughout the five epochs, ending at 0.27 compared to 0.31, further indicating improved model fitting. On the other hand, the changes were less pronounced in the validation set. The validation binary accuracy increased slightly but stayed around 0.8, suggesting no significant improvement in the model's generalization to unseen data. However, the validation loss decreased slightly from 0.83 to 0.79, indicating a minor improvement in performance on the validation set. Overall, including header content seems to enhance the model’s performance on the training data, but its impact on predictive accuracy for unseen data is minimal.
 
 ### Bigrams
 
@@ -15,7 +15,6 @@ Do bigrams capture additional information relevant to the classification of inte
 First we prepared the text data (claims-raw.RData) for analysis by tokenizing it into unigrams and bigrams, reducing the dimensionality using PCA, and then building two logistic regression models (one with only unigram features and one with both unigram and bigram features). Then we compared the models using AIC to decide whether adding bigrams improves the model performance.
 
 Based on our analysis, adding bigrams doesn’t really help in figuring out the claims status of a page. First, a model was created using single words, or unigrams, and it had an AIC score of 18. Then, the text was split into pairs of words, bigrams, and another model was made that combined the unigrams with the bigrams. This combined model also had an AIC score of 18, the same as the unigram model. Since the scores are the same, it means the bigrams didn’t add anything useful to the predictions. Overall, the single words were enough to predict the claims status, and the bigrams didn’t make any difference.
-
 
 ### Neural net
 
