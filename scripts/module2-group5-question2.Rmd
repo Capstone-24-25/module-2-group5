@@ -1,0 +1,61 @@
+---
+title: "module2-group5"
+author: "Samantha Su"
+date: "2024-11-15"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(tidytext)
+library(glmnet)
+library(Matrix)
+
+load("claims-raw.RData")
+str(claims_raw)
+colnames(claims_raw)
+
+claims_raw <- claims_raw %>%
+  mutate(text_tmp = as.character(text_tmp)) %>%
+  mutate(text_tmp = str_remove_all(text_tmp, "[[:punct:]]") %>% tolower())
+
+unigram_tokens <- claims_raw %>%
+  unnest_tokens(word, text_tmp) %>%        
+  count(label, word) %>%                   
+  cast_sparse(label, word, n)              
+
+unigram_pca <- prcomp(as.matrix(unigram_tokens), scale. = TRUE)
+num_unigram_pcs <- ncol(unigram_pca$x)
+use_unigram_pcs <- min(num_unigram_pcs, 10) 
+unigram_model <- glm(as.factor(row.names(unigram_tokens)) ~ ., 
+                     data = data.frame(label = row.names(unigram_tokens), 
+                                       unigram_pca$x[, 1:use_unigram_pcs]),
+                     family = "binomial")
+unigram_predictions <- predict(unigram_model, type = "link")
+
+bigram_tokens <- claims_raw %>%
+  unnest_tokens(bigram, text_tmp, token = "ngrams", n = 2) %>%
+  count(label, bigram) %>%                                     
+  cast_sparse(label, bigram, n)                               
+
+bigram_pca <- prcomp(as.matrix(bigram_tokens), scale. = TRUE)
+
+num_bigram_pcs <- ncol(bigram_pca$x)
+use_bigram_pcs <- min(num_bigram_pcs, 10)  
+
+combined_model <- glm(as.factor(row.names(bigram_tokens)) ~ unigram_predictions + ., 
+                      data = data.frame(label = row.names(bigram_tokens), 
+                                        unigram_predictions, 
+                                        bigram_pca$x[, 1:use_bigram_pcs]),
+                      family = "binomial")
+
+aic_unigram <- AIC(unigram_model)
+aic_combined <- AIC(combined_model)
+cat("AICfor the Unigram Model:", aic_unigram, "\n")
+cat("AIC for the Combined Model:", aic_combined, "\n")
+if (aic_combined < aic_unigram) {
+  cat("The combined model captures additional information with bigrams.\n")} 
+else {
+  cat("Bigrams don't add significant information.\n")}
+
+```
