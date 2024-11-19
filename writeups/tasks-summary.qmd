@@ -12,6 +12,8 @@ Including header content in the model resulted in a small improvement in perform
 
 Do bigrams capture additional information relevant to the classification of interest? Answer the question, **briefly** describe what analysis you conducted to arrive at your answer, and provide quantitative evidence supporting your answer.
 
+First we prepared the text data (claims-raw.RData) for analysis by tokenizing it into unigrams and bigrams, reducing the dimensionality using PCA, and then building two logistic regression models (one with only unigram features and one with both unigram and bigram features). Then we compared the models using AIC to decide whether adding bigrams improves the model performance. The AIC for the Unigram Model was 18 and the AIC for the Combined Model was also 18, so bigrams do not add significant additional information.
+
 Based on our analysis, adding bigrams doesn’t really help in figuring out the claims status of a page. First, a model was created using single words, or unigrams, and it had an AIC score of 18. Then, the text was split into pairs of words, bigrams, and another model was made that combined the unigrams with the bigrams. This combined model also had an AIC score of 18, the same as the unigram model. Since the scores are the same, it means the bigrams didn’t add anything useful to the predictions. Overall, the single words were enough to predict the claims status, and the bigrams didn’t make any difference.
 
 
