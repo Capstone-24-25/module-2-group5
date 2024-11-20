@@ -34,6 +34,9 @@ For the principle logistic regression with modified architecture,
 
 Describe your final predictive models. Include one paragraph with details on the binary classification approach, and one on the multiclass approach. Include for each:
 
+For the principal logistic regression with a modified architecture, two logistic principal component regression models with L1 penalty were performed on unigrams and bigrams vectorized data, respectively. Grid search with 5-fold cross-validation was used to determine the optimal regularization parameter and exclude features with lower importance based on their contributions to the covariance matrix. The final principle features were combined with logit-odds from unigrams and numbers of pronouns to form a final `X_features`.
+
+
 -   what ML/statistical method was used
 
 -   model specification and hyperparameter selection
