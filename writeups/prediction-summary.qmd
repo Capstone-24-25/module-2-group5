@@ -10,15 +10,25 @@ Provide a 3-5 sentence summary of your work on the primary task. Indicate what i
 
 > *Header and paragraph content was scraped from the raw webpages and processed into term frequencies of word tokens. For binary classification, a two-layer neural network yielded an estimated 81.4% accuracy; for multiclass classification, a support vector machine gave 78% accuracy.*
 
+> *A logistic regression with a slightly modified architecture was developed as well for binary classification. Similar preprocessing techniques were used. The final test accuracy was 80.74% using the metric of weighted F1 score.*
+
 ### Preprocessing
 
 In one paragraph lay out your preprocessing pipeline. No need to provide exact step-by-step detail; just give an overview of the main components:
+
+For the principle logistic regression with modified architecture,
+-   The `parse_data()` function from `preprocessing.R` is used in addition to the customized function to capture the headers and paragraphs information from the raw HTML.
+
+-   All punctuation words and stopped words were removed. Every letters were converted to lower case. Additionally, tokenization and lemmatization were conducted using `Spacy` package. 
+
+-   Different numbers of pronouns were counted and treated as additional features for training the model. Term Frequency-Inverse Term Frequency (tf-idf) vectorization was performed to weight the tokenized unigrams and bigrams. Logit-odds from unigrams after PCA were also treated as one of the numerical features.
 
 -   what text content was extracted from HTML
 
 -   how text was cleaned
 
 -   how cleaned text was represented quantitatively
+
 
 ### Methods
 
@@ -29,6 +39,9 @@ Describe your final predictive models. Include one paragraph with details on the
 -   model specification and hyperparameter selection
 
 -   training method
+
+For the principle logistic regression with modified architecture, 
+
 
 ### Results
 
