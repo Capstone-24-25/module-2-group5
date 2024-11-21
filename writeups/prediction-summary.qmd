@@ -12,6 +12,8 @@ Provide a 3-5 sentence summary of your work on the primary task. Indicate what i
 
 > *A logistic regression with a slightly modified architecture was developed as well for binary classification. Similar preprocessing techniques were used. The final test accuracy was 80.74% using the metric of weighted F1 score.*
 
+In this project, we developed predictive models for binary and multiclass classification of webpage claims using transformer-based architectures. The input data consisted of cleaned textual content extracted from raw HTML, with preprocessing steps including HTML parsing and tokenization. For binary classification, we fine-tuned a BERT-based transformer model, achieving an accuracy of 82%. Similarly, for multiclass classification, we used a BERT-based model tailored for five classes, achieving an accuracy of 84.57%. These results demonstrate the effectiveness of transformer models in handling complex textual data for both binary and multiclass prediction tasks.
+
 ### Preprocessing
 
 In one paragraph lay out your preprocessing pipeline. No need to provide exact step-by-step detail; just give an overview of the main components:
