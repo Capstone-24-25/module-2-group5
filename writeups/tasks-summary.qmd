@@ -31,7 +31,7 @@ Summarize the neural network model you trained by desribing:
 
 
 ### Primary Task Attempt 
-> *A logistic regression with a slightly modified architecture was developed as well for binary classification. Similar preprocessing techniques were used. The final test accuracy was 80.74% using the metric of weighted F1 score.*
+> *A logistic regression `bclass_logreg_pca.ipynb` with a slightly modified architecture was developed as well for binary classification. Similar preprocessing techniques were used. The final test accuracy was 80.74% using the metric of weighted F1 score.*
 
 For the principle logistic regression with modified architecture,
 -   The `parse_data()` function from `preprocessing.R` is used in addition to the customized function to capture the headers and paragraphs information from the raw HTML.
