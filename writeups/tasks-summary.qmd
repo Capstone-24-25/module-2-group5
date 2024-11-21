@@ -6,12 +6,11 @@ date: today
 
 ### HTML scraping
 
-Using logistic principal component regression did not significantly improve accuracy. Under Unigram model PCA, the AIC is 18. While preparing the data for developing the predictive model, the binary classification testing AUC was approximately 0.75, incorporating header information as well as several other details. The improvement was minimal. We also explored changes in performance using the given NLP FNN model, which included a connected layer with 25 neurons (units). Including header content in the model resulted in a small improvement in performance, primarily on the training data. The binary accuracy increased from 0.92 to 0.95, indicating a small improvement in the model's ability to classify the training data correctly, demonstrating better model fitting. The loss decreased throughout the five epochs, ending at 0.27 compared to 0.31, further indicating improved model fitting. On the other hand, the changes were less pronounced in the validation set. The validation binary accuracy increased slightly but stayed around 0.8, suggesting no significant improvement in the model's generalization to unseen data. However, the validation loss decreased slightly from 0.83 to 0.79, indicating a minor improvement in performance on the validation set. Overall, including header content seems to enhance the model’s performance on the training data, but its impact on predictive accuracy for unseen data is minimal. 
+Using logistic principal component regression improved accuracy. The test accuracy before adding the Header Information is 0.59. After adding the 6 header tags, the test accuracy is 0.77. Additionally, under Unigram model PCA, the AIC is 18. While preparing the data for developing the predictive model, the binary classification testing AUC was approximately 0.75, incorporating header information as well as several other details.
 
+We also explored changes in performance using the given NLP FNN model, which included a connected layer with 25 neurons (units). Including header content in the model resulted in a small improvement in performance, primarily on the training data. The binary accuracy increased from 0.92 to 0.95, indicating a small improvement in the model's ability to classify the training data correctly, demonstrating better model fitting. The loss decreased throughout the five epochs, ending at 0.27 compared to 0.31, further indicating improved model fitting. On the other hand, the changes were less pronounced in the validation set. The validation binary accuracy increased slightly but stayed around 0.8, suggesting no significant improvement in the model's generalization to unseen data. However, the validation loss decreased slightly from 0.83 to 0.79, indicating a minor improvement in performance on the validation set. Overall, including header content seems to enhance the model’s performance on the training data, but its impact on predictive accuracy for unseen data is minimal.
 
 ### Bigrams
-
-Do bigrams capture additional information relevant to the classification of interest? Answer the question, **briefly** describe what analysis you conducted to arrive at your answer, and provide quantitative evidence supporting your answer.
 
 First we prepared the text data (claims-raw.RData) for analysis by tokenizing it into unigrams and bigrams, reducing the dimensionality using PCA, and then building two logistic regression models (one with only unigram features and one with both unigram and bigram features). Then we compared the models using AIC to decide whether adding bigrams improves the model performance.
 
@@ -25,13 +24,13 @@ The optimization was performed using the Adam optimizer with a learning rate of 
 
 The binary classification model achieved a predictive accuracy of 82.01%, while the multiclass classification model achieved an accuracy of 84.58% on the validation set. These results demonstrate the neural network's ability to accurately predict both binary and multiclass labels for textual claim data.
 
-### Primary Task Attempt 
+### Primary Task Attempt
+
 > *A logistic regression `bclass_logreg_pca.ipynb` with a slightly modified architecture was developed as well for binary classification. Similar preprocessing techniques were used. The final test accuracy was 80.74% using the metric of weighted F1 score.*
 
-For the principle logistic regression with modified architecture,
--   The `parse_data()` function from `preprocessing.R` is used in addition to the customized function to capture the headers and paragraphs information from the raw HTML.
+For the principle logistic regression with modified architecture, - The `parse_data()` function from `preprocessing.R` is used in addition to the customized function to capture the headers and paragraphs information from the raw HTML.
 
--   All punctuation words and stopped words were removed. Every letters were converted to lower case. Additionally, tokenization and lemmatization were conducted using `Spacy` package. 
+-   All punctuation words and stopped words were removed. Every letters were converted to lower case. Additionally, tokenization and lemmatization were conducted using `Spacy` package.
 
 -   Different numbers of pronouns were counted and treated as additional features for training the model. Term Frequency-Inverse Term Frequency (tf-idf) vectorization was performed to weight the tokenized unigrams and bigrams. Logit-odds from unigrams after PCA were also treated as one of the numerical features.
 

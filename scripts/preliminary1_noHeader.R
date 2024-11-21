@@ -120,4 +120,4 @@ confusion_matrix <- table(Predicted = predicted_classes, Actual = test$bclass)
 print(confusion_matrix)
 
 accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
-cat("Test Accuracy:", accuracy, "\n")
+cat("Test Accuracy with out Header Informations:", accuracy, "\n")
