@@ -6,7 +6,7 @@ date: "November 20, 2024"
 
 ### Abstract
 
-In this project, we developed predictive models for binary and multiclass classification of webpage claims using transformer-based architectures. The input data consisted of raw HTML content, from which text was extracted, cleaned, and preprocessed. For binary classification, a BERT-based transformer model was fine-tuned to distinguish between two classes, achieving an accuracy of 82% on the test data. For multiclass classification, another fine-tuned BERT model was used to predict five claim categories, achieving an accuracy of 84.57%. Both models demonstrated the strength of transformer architectures in handling textual data for classification tasks.
+In this project, we developed predictive models for binary and multiclass classification of webpage claims using transformer-based architectures. The input data consisted of raw HTML content, from which text was extracted, cleaned, and preprocessed. For binary classification, a BERT-based transformer model was fine-tuned to distinguish between two classes, achieving an accuracy of 82% on the test data. For multiclass classification, another fine-tuned BERT model was used to predict five claim categories, achieving an accuracy of 84.57%. Both models demonstrated the strength of transformer architectures in handling textual data for classification tasks. Due to the file size limit of github, the two models' pth file google drive links are in Readme.md in the results folder to be checked. The prediction python script is tested in the google colab environment.
 
 ### Preprocessing
 
