@@ -28,3 +28,16 @@ Summarize the neural network model you trained by desribing:
 -   training epochs
 
 -   predictive accuracy
+
+
+### Primary Task Attempt 
+> *A logistic regression `bclass_logreg_pca.ipynb` with a slightly modified architecture was developed as well for binary classification. Similar preprocessing techniques were used. The final test accuracy was 80.74% using the metric of weighted F1 score.*
+
+For the principle logistic regression with modified architecture,
+-   The `parse_data()` function from `preprocessing.R` is used in addition to the customized function to capture the headers and paragraphs information from the raw HTML.
+
+-   All punctuation words and stopped words were removed. Every letters were converted to lower case. Additionally, tokenization and lemmatization were conducted using `Spacy` package. 
+
+-   Different numbers of pronouns were counted and treated as additional features for training the model. Term Frequency-Inverse Term Frequency (tf-idf) vectorization was performed to weight the tokenized unigrams and bigrams. Logit-odds from unigrams after PCA were also treated as one of the numerical features.
+
+For the principal logistic regression with a modified architecture, two logistic principal component regression models with L1 penalty were performed on unigrams and bigrams vectorized data, respectively. Grid search with 5-fold cross-validation was used to determine the optimal regularization parameter and exclude features with lower importance based on their contributions to the covariance matrix. The final principle features were combined with logit-odds from unigrams and numbers of pronouns to form a final `X_features`.
