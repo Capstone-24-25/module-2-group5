@@ -28,24 +28,24 @@ The multiclass classification model used the same BERT-based transformer archite
 
 The binary classification model achieves the following metrics on the validation dataset:
 
-| Metric        | Value     |
-|---------------|-----------|
-| Accuracy      | 82.01%    |
-| F1 Score      | 83.22%    |
-| Precision     | 82.68%    |
-| Recall        | 83.77%    |
-| Loss          | 0.4132    |
+| Metric    | Value  |
+|-----------|--------|
+| Accuracy  | 82.01% |
+| F1 Score  | 83.22% |
+| Precision | 82.68% |
+| Recall    | 83.77% |
+| Loss      | 0.4132 |
 
 #### Multiclass Classification
 
 The multiclass classification model's performance is outlined below:
 
-| Metric        | Value     |
-|---------------|-----------|
-| Accuracy      | 84.58%    |
-| F1 Score      | 84.47%    |
-| Precision     | 84.51%    |
-| Recall        | 84.58%    |
-| Loss          | 0.4570    |
+| Metric    | Value  |
+|-----------|--------|
+| Accuracy  | 84.58% |
+| F1 Score  | 84.47% |
+| Precision | 84.51% |
+| Recall    | 84.58% |
+| Loss      | 0.4570 |
 
 The model achieved consistent precision and recall across the five classes, as reflected in its F1 score of 84.47%. These results validate the transformer model’s ability to handle multiclass classification tasks effectively.
