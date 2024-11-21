@@ -1,0 +1,113 @@
+---
+title: "module2-group5"
+author: "Samantha Su"
+date: "2024-11-15"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(Matrix)
+library(glmnet)
+library(tidytext)
+library(textstem)
+library(qdapRegex)
+library(stopwords)
+library(tokenizers)
+library(yardstick)
+library(sparsesvd)
+
+
+url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/activities/data/'
+
+source(paste(url, 'projection-functions.R', sep = ''))
+source('preprocessing.R')
+load('~/Documents/GitHub/module-2-group5/data/claims-raw.RData')
+
+cleaned_claims <- claims_raw %>% parse_data()
+save(cleaned_claims, file = '~/Documents/GitHub/module-2-group5/data/claims-raw.RData')
+
+set.seed(102722)
+claim_tfidf <- nlp_fn(cleaned_claims)
+claim_tfidf <- claim_tfidf %>% filter(.id != "url2328")
+
+partition <- claim_tfidf %>% initial_split(prop = 0.8)
+train_dtm <- training(partition) %>% select(-.id, -bclass)
+train_label <- training(partition) %>% select(.id, bclass)
+test_dtm <- testing(partition) %>% select(-.id, -bclass)
+test_label <- testing(partition) %>% select(.id, bclass)
+
+projection <- projection_fn(.dtm = train_dtm, .prop = 0.7)
+train_dtm_projection <- projection$data
+projection$n_pc
+
+train_pca <- train_label %>%
+  transmute(bclass = factor(bclass)) %>%
+  bind_cols(train_dtm_projection)
+
+fit <- glm(bclass ~ ., data = train_pca, family = 'binomial')
+
+test_dtm_projection <- reproject_fn(.dtm = test_dtm, projection)
+x_test_dtm <- as.data.frame(test_dtm_projection)
+
+predictions <- predict(fit, newdata = x_test_dtm, type = 'response')
+
+pred_df <- test_label %>%
+  transmute(bclass = factor(bclass)) %>%
+  bind_cols(pred = as.numeric(predictions)) %>%
+  mutate(bclass.pred = factor(pred > 0.5, labels = levels(bclass)))
+
+panel <- metric_set(sensitivity, specificity, accuracy, roc_auc)
+pred_df %>% panel(truth = bclass, estimate = bclass.pred, pred, event_level = 'second')
+
+bigram_tokenization <- function(parse_data_out) {
+  parse_data_out %>%
+    unnest_tokens(output = token, input = text_clean, token = 'ngrams', n = 2, stopwords = str_remove_all(stop_words$word, '[[:punct:]]')) %>%
+    mutate(token_lem = lemmatize_words(token)) %>%
+    filter(str_length(token_lem) > 2) %>%
+    count(.id, bclass, token_lem, name = 'n') %>%
+    bind_tf_idf(term = token_lem, document = .id, n = n) %>%
+    pivot_wider(id_cols = c('.id', 'bclass'), names_from = 'token_lem', values_from = 'tf_idf', values_fill = 0)
+}
+
+tfidf_bigram <- bigram_tokenization(cleaned_claims)
+partition_bi <- tfidf_bigram %>% initial_split(prop = 0.8)
+train_dtm_bi <- training(partition_bi) %>% select(-.id, -bclass)
+train_label_bi <- training(partition_bi) %>% select(.id, bclass)
+test_dtm_bi <- testing(partition_bi) %>% select(-.id, -bclass)
+test_label_bi <- testing(partition_bi) %>% select(.id, bclass)
+
+projection_bi <- projection_fn(.dtm = train_dtm_bi, .prop = 0.7)
+train_dtm_projection_bi <- projection_bi$data
+projection_bi$n_pc
+
+test_projection <- reproject_fn(.dtm = test_dtm_bi, projection_bi)
+test_dtm_projection <- as.data.frame(test_projection)
+
+train_final <- train_label %>%
+  transmute(bclass = factor(bclass)) %>%
+  bind_cols(log_odds_word = predict(fit, type = "link")) %>%
+  bind_cols(train_dtm_projection_bi)
+
+fit_combined <- glm(bclass ~ ., data = train_final, family = "binomial")
+
+test_final <- test_label %>%
+  transmute(bclass = factor(bclass)) %>%
+  bind_cols(log_odds_word = predict(fit, newdata = x_test_dtm, type = "link")) %>%
+  bind_cols(test_dtm_projection)
+
+predictions_final <- predict(fit_combined, newdata = test_final, type = 'response')
+
+pred_df_final <- test_label_bi %>%
+  transmute(bclass = factor(bclass)) %>%
+  bind_cols(pred = as.numeric(predictions_final)) %>%
+  mutate(bclass.pred = factor(pred > 0.5, labels = levels(bclass)))
+
+panel_final <- metric_set(sensitivity, specificity, accuracy, roc_auc)
+pred_df_final %>% panel_final(truth = bclass, estimate = bclass.pred, pred, event_level = 'second')
+```
+
+
+
+
