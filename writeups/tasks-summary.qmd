@@ -19,16 +19,11 @@ Based on our analysis, adding bigrams doesn’t really help in figuring out the 
 
 ### Neural net
 
-Summarize the neural network model you trained by desribing:
+The neural network models for both binary and multiclass classification tasks were built using a fine-tuned BERT-based transformer architecture, which leverages pretrained embeddings to extract contextual features from textual data. The architecture consisted of a BERT encoder followed by a classification head with a single fully connected layer. For binary classification, the output layer contained two neurons, while for multiclass classification, it contained five neurons, both with a softmax activation function for generating class probabilities.
 
--   architecture
+The optimization was performed using the Adam optimizer with a learning rate of 2e-5 and weight decay for regularization. The cross-entropy loss function was used as the objective for both tasks to handle classification effectively. The models were trained for 5 epochs with early stopping to avoid overfitting, and validation was conducted after each epoch to monitor performance.
 
--   optimization and loss
-
--   training epochs
-
--   predictive accuracy
-
+The binary classification model achieved a predictive accuracy of 82.01%, while the multiclass classification model achieved an accuracy of 84.58% on the validation set. These results demonstrate the neural network's ability to accurately predict both binary and multiclass labels for textual claim data.
 
 ### Primary Task Attempt 
 > *A logistic regression `bclass_logreg_pca.ipynb` with a slightly modified architecture was developed as well for binary classification. Similar preprocessing techniques were used. The final test accuracy was 80.74% using the metric of weighted F1 score.*
